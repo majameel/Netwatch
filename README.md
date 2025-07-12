@@ -488,13 +488,6 @@ For enterprise deployments and custom implementations:
 - 🔧 **Custom Development**: Tailored solutions available
 - 📊 **Consulting**: Network monitoring strategy and implementation
 
----
-
-## 🌟 Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/isp-network-monitor&type=Date)](https://star-history.com/#yourusername/isp-network-monitor&Date)
-
----
 
 **Made with ❤️ for reliable network monitoring**
 
