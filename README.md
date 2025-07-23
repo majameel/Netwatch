@@ -1,494 +1,264 @@
-# Netwatch - A Network Monitoring Tool 🌐
+# 🌐 NetPulse - Real-time Network Monitor
 
-A comprehensive, enterprise-grade network monitoring solution designed to detect packet loss, high latency, and connectivity issues with your ISP or any IP. Perfect for providing professional evidence to ISP support teams and maintaining 24/7 network visibility.
+![NetPulse](https://img.shields.io/badge/NetPulse-Network%20Monitor-blue)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 
-![Python](https://img.shields.io/badge/python-v3.7+-blue.svg)
-![Platform](https://img.shields.io/badge/platform-linux%20%7C%20windows-lightgrey.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
+> **A powerful, containerized network monitoring tool that provides real-time network analysis with AI-powered insights.**
 
-## 🎯 Features
+NetPulse is a modern web-based network monitoring application that continuously monitors multiple IP addresses and domains, providing instant alerts when issues are detected. With integrated AI analysis powered by Google Gemini, it offers intelligent insights into network problems.
 
-### Core Monitoring
-- **Real-time packet loss detection** with 2-second intervals
-- **High latency monitoring** with configurable thresholds
-- **Automatic recovery detection** and notifications
-- **Multiple email recipients** support
-- **Professional evidence logging** in standard ping format
+## ✨ Key Features
 
-### Visual Analytics
-- **Real-time graphs** showing latency trends and packet loss events
-- **Interactive dashboards** with connection status timeline
-- **Automated graph snapshots** for historical records
-- **Statistical analysis** with success rates and averages
+- **🎯 Real-time Network Monitoring** - Continuous ping monitoring with customizable intervals
+- **🚨 Intelligent Alerts** - AI-powered analysis of network issues using Google Gemini
+- **📊 Visual Dashboard** - Real-time charts and graphs showing network performance
+- **🔔 Multi-channel Notifications** - Slack and email webhook integrations
+- **📈 Historical Reporting** - Detailed performance history and trends
+- **🐳 Docker Ready** - Fully containerized with production-ready deployment
+- **🌙 Dark/Light Theme** - Modern, responsive UI with theme switching
+- **📁 Data Export** - Export monitoring data to CSV format
 
-### Enterprise Features
-- **24/7 cloud monitoring** with auto-restart capabilities
-- **Automatic log rotation** to prevent disk space issues
-- **Weekly summary reports** via email
-- **Professional email alerts** perfect for ISP escalations
-- **Multi-platform support** (Windows, Linux, cloud VMs)
-
-## 🚀 Quick Start
+## 🚀 Quick Start with Docker (Recommended)
 
 ### Prerequisites
-```bash
-# Python 3.7+ required
-python3 --version
+- Docker and Docker Compose installed on your system
+- Gemini API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
 
-# Install required packages
-pip3 install ping3 matplotlib pandas
+### 1. Download Project Files
+Create a new directory and download all project files:
+
+```bash
+mkdir netpulse && cd netpulse
+# Download all the files provided (see file list below)
 ```
 
-### Basic Setup
+### 2. Configure Environment
 ```bash
-# Clone repository
-git clone https://github.com/yourusername/isp-network-monitor.git
-cd isp-network-monitor
+# Copy environment template
+cp .env.example .env
 
-# Run with default configuration
-python3 isp_monitor.py
+# Edit .env file with your Gemini API key
+nano .env  # or use your preferred editor
 ```
 
-### Cloud VM Setup (Recommended)
-```bash
-# Ubuntu/Debian setup
-sudo apt update && sudo apt upgrade -y
-sudo apt install python3 python3-pip -y
-pip3 install ping3 matplotlib pandas
+Add your Gemini API key to the `.env` file:
+```env
+GEMINI_API_KEY=your_actual_api_key_here
+```
 
-# Run as service
-sudo systemctl enable isp-monitor.service
-sudo systemctl start isp-monitor.service
+### 3. Launch Application
+```bash
+# Build and start the container
+docker-compose up -d
+
+# View logs
+docker-compose logs -f netpulse
+
+# Check container status
+docker-compose ps
+```
+
+### 4. Access NetPulse
+Open your browser and navigate to: `http://localhost:8080`
+
+## 📁 Required Files
+
+Make sure you have all these files in your project directory:
+
+**Docker & Configuration:**
+- `Dockerfile` - Multi-stage Docker build configuration
+- `docker-compose.yml` - Container orchestration
+- `nginx.conf` - Web server configuration
+- `entrypoint.sh` - Container startup script
+- `.env.example` - Environment template
+- `.gitignore` - Git ignore rules
+- `.dockerignore` - Docker ignore rules
+
+**Application Files** (from your existing project):
+- `package.json` - Node.js dependencies
+- `vite.config.ts` - Build configuration
+- `tsconfig.json` - TypeScript configuration
+- `index.html` - HTML entry point
+- `index.tsx` - React entry point
+- `App.tsx` - Main application component
+- `types.ts` - TypeScript definitions
+- All component files in `/components` directory
+- All service files in `/services` directory
+
+## 🔧 Alternative Installation Methods
+
+### Manual Installation (Development)
+
+```bash
+# Clone or download project files
+cd netpulse
+
+# Install dependencies
+npm install
+
+# Create environment file
+cp .env.example .env.local
+# Add your GEMINI_API_KEY to .env.local
+
+# Start development server
+npm run dev
+```
+
+### Production Build (Without Docker)
+
+```bash
+# Build for production
+npm run build
+
+# Serve with a web server
+npm install -g serve
+serve -s dist -l 8080
 ```
 
 ## ⚙️ Configuration
 
-### Basic Configuration (`isp_config.json`)
-```json
-{
-  "target_ip": "139.167.129.22",
-  "latency_threshold": 150,
-  "check_interval": 2,
-  "email": {
-    "smtp_server": "smtp.gmail.com",
-    "smtp_port": 587,
-    "from_email": "your-email@domain.com",
-    "to_email": "recipient1@domain.com,recipient2@domain.com",
-    "username": "your-email@domain.com",
-    "password": "your-app-password",
-    "send_every_failure": true,
-    "cooldown_seconds": 30
-  },
-  "graphs": {
-    "enable_realtime": false,
-    "save_graphs": true,
-    "graph_window_hours": 2
-  }
-}
-```
+### Environment Variables
 
-### Email Configuration
-- **Gmail Setup**: Use App Passwords instead of regular passwords
-- **Multiple Recipients**: Separate emails with commas
-- **Cooldown**: Prevents email spam during extended outages
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `GEMINI_API_KEY` | Yes | Your Google Gemini API key for AI analysis |
+| `SLACK_WEBHOOK_URL` | No | Slack webhook for notifications |
+| `EMAIL_WEBHOOK_URL` | No | Email webhook endpoint |
+| `PORT` | No | Application port (default: 8080) |
 
-### Monitoring Targets
-- **Primary ISP Gateway**: Your ISP's gateway IP
-- **Public DNS**: 8.8.8.8, 1.1.1.1 for internet connectivity
-- **Custom Servers**: Any IP address you want to monitor
+### Application Settings
 
-## 📊 Usage Examples
+Once the application is running, you can configure:
 
-### Monitor Your ISP Connection
+- **Monitoring Thresholds** - Set latency and packet loss limits
+- **Alert Intervals** - Customize ping intervals per target
+- **Notification Preferences** - Configure sound alerts and themes
+- **Webhook URLs** - Set up Slack and email notifications
+
+## 📊 Using NetPulse
+
+### Adding Monitoring Targets
+
+1. Click "Add Target" in the dashboard
+2. Enter target name and IP address/domain
+3. Set custom thresholds (optional)
+4. Click "Add Target" to start monitoring
+
+### Setting Up Alerts
+
+NetPulse supports multiple notification channels:
+
+**Slack Notifications:**
+1. Create a Slack app at [api.slack.com](https://api.slack.com/apps)
+2. Enable "Incoming Webhooks"
+3. Copy the webhook URL to NetPulse settings
+
+**Email Notifications:**
+- Requires a custom webhook service (see `HELP.md` for detailed setup)
+
+### Viewing Reports
+
+The Reports section provides:
+- Historical performance charts
+- Alert timeline
+- Export capabilities for all data
+- Network performance analytics
+
+## 🐳 Docker Commands Reference
+
+### Basic Operations
 ```bash
-# Basic ISP monitoring
-python3 isp_monitor.py
+# Start services
+docker-compose up -d
 
-# With custom target
-python3 isp_monitor.py --target 192.168.1.1
+# Stop services
+docker-compose down
+
+# View logs
+docker-compose logs -f netpulse
+
+# Restart services
+docker-compose restart
+
+# Update and rebuild
+docker-compose build --no-cache
+docker-compose up -d
 ```
 
-### Generate Weekly Reports
+### Maintenance
 ```bash
-# Manual weekly summary
-./weekly_summary.sh
+# Enter container shell
+docker-compose exec netpulse sh
 
-# Automated via cron
-0 9 * * 0 /path/to/weekly_summary.sh
+# View container stats
+docker stats netpulse-monitor
+
+# Backup application data
+docker cp netpulse-monitor:/usr/share/nginx/html ./backup/
 ```
 
-### Cloud Deployment
+### Production Deployment
 ```bash
-# Deploy on DigitalOcean/AWS/Azure
-git clone https://github.com/yourusername/isp-network-monitor.git
-cd isp-network-monitor
-sudo ./setup.sh
+# Production with optimizations
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+
+# With reverse proxy and SSL
+docker-compose --profile proxy up -d
 ```
 
-## 📁 File Structure
+## 🔍 Troubleshooting
 
-```
-isp-network-monitor/
-├── isp_monitor.py              # Main monitoring script
-├── isp_config.json             # Configuration file
-├── setup.sh                    # Automated setup script
-├── weekly_summary.sh           # Weekly report generator
-├── check_isp_status.sh         # Status checker script
-├── logs/
-│   ├── packet_loss_log.csv     # Standard evidence logs
-│   ├── detailed_monitor_log.csv # Detailed analytics data
-│   └── isp_monitor.log         # Debug and status logs
-├── graphs/
-│   └── isp_monitor_graph_*.png # Automated graph snapshots
-├── systemd/
-│   └── isp-monitor.service     # Linux service configuration
-└── docs/
-    ├── SETUP.md               # Detailed setup guide
-    ├── TROUBLESHOOTING.md     # Common issues and solutions
-    └── CLOUD_DEPLOYMENT.md   # Cloud provider guides
-```
+### Container Issues
 
-## 🛠️ Installation Guide
-
-### Windows Setup
-```powershell
-# Download and install Python 3.7+
-# Download repository
-git clone https://github.com/yourusername/isp-network-monitor.git
-cd isp-network-monitor
-
-# Install dependencies
-pip install ping3 matplotlib pandas
-
-# Run setup
-.\setup.bat
-
-# Start monitoring
-python isp_monitor.py
-```
-
-### Linux Setup
+**Container won't start:**
 ```bash
-# Clone repository
-git clone https://github.com/yourusername/isp-network-monitor.git
-cd isp-network-monitor
+# Check if port 8080 is available
+netstat -an | grep 8080
 
-# Run automated setup
-chmod +x setup.sh
-sudo ./setup.sh
+# Check Docker logs
+docker-compose logs netpulse
 
-# Start as service
-sudo systemctl start isp-monitor.service
-sudo systemctl enable isp-monitor.service
+# Verify environment variables
+docker-compose exec netpulse env | grep GEMINI
 ```
 
-### Docker Setup
-```bash
-# Build image
-docker build -t isp-monitor .
+**Gemini AI not working:**
+- Verify API key is correct in `.env` file
+- Check API quota in Google AI Studio
+- Review browser console for errors
 
-# Run container
-docker run -d --name isp-monitor \
-  -v $(pwd)/config:/app/config \
-  -v $(pwd)/logs:/app/logs \
-  isp-monitor
-```
+**Network monitoring issues:**
+- Ensure targets are reachable from container
+- Check Docker network configuration
+- Verify DNS resolution
 
-## 📈 Cloud Deployment
+### Performance Optimization
 
-### Recommended Cloud Providers
-
-| Provider | Plan | Cost/Month | Setup Time |
-|----------|------|------------|------------|
-| **DigitalOcean** | Basic Droplet | $4 | 5 minutes |
-| **AWS EC2** | t2.micro | $8 (Free tier available) | 10 minutes |
-| **Google Cloud** | e2-micro | $6 | 8 minutes |
-| **Azure** | B1s | $7 | 12 minutes |
-
-### One-Click Deployment
-[![Deploy to DigitalOcean](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/yourusername/isp-network-monitor)
-
-### Manual Cloud Setup
-```bash
-# Create VM with Ubuntu 20.04+
-# SSH into VM
-ssh user@your-vm-ip
-
-# Run deployment script
-curl -sSL https://raw.githubusercontent.com/yourusername/isp-network-monitor/main/deploy.sh | bash
-```
-
-## 📧 Email Alert Examples
-
-### Packet Loss Alert
-```
-Subject: URGENT: Packet Loss at 139.167.129.22 - Failure #3
-
-PACKET DROPS DETECTED AT 139.167.129.22
-
-Detection Time: 2025-07-09 14:30:15
-Consecutive Failures: 3 (Duration: 1.2 minutes)
-Total Checks: 1,247
-
-CURRENT STATUS:
-Request to 139.167.129.22 timed out
-
-LAST 5 RESULTS:
-2025-07-09 14:29:45,Reply from 139.167.129.22: bytes=32 time=18ms TTL=119
-2025-07-09 14:29:47,Reply from 139.167.129.22: bytes=32 time=22ms TTL=119
-2025-07-09 14:29:49,Request to 139.167.129.22 timed out
-2025-07-09 14:29:51,Request to 139.167.129.22 timed out
-2025-07-09 14:29:53,Request to 139.167.129.22 timed out
-
----
-Automated ISP Monitor Alert
-Please investigate packet loss issues with your ISP
-```
-
-### Weekly Summary Report
-```
-Subject: ISP Monitor Weekly Summary
-
-NETWORK PERFORMANCE SUMMARY (Week of July 1-7, 2025)
-
-Overall Statistics:
-✅ Uptime: 99.2%
-📊 Total Checks: 302,400
-⚠️ Packet Loss Events: 15
-🐌 High Latency Events: 8
-📈 Average Latency: 22.3ms
-
-Daily Breakdown:
-Monday: 99.8% uptime, 3 issues
-Tuesday: 99.9% uptime, 1 issue
-Wednesday: 97.2% uptime, 12 issues ⚠️
-Thursday: 99.6% uptime, 2 issues
-Friday: 99.9% uptime, 1 issue
-Weekend: 100% uptime, 0 issues
-
-Recommendations:
-- Wednesday had significant issues (contact ISP)
-- Overall performance is good
-- Weekend connectivity excellent
-```
-
-## 🔧 Advanced Configuration
-
-### Custom Monitoring Intervals
-```json
-{
-  "check_interval": 1,        // Check every second (intensive)
-  "check_interval": 5,        // Check every 5 seconds (balanced)
-  "check_interval": 30        // Check every 30 seconds (light)
-}
-```
-
-### Multiple Target Monitoring
-```json
-{
-  "targets": [
-    {"ip": "8.8.8.8", "name": "Google DNS"},
-    {"ip": "1.1.1.1", "name": "Cloudflare DNS"},
-    {"ip": "192.168.1.1", "name": "Local Gateway"}
-  ]
-}
-```
-
-### Custom Thresholds
-```json
-{
-  "latency_threshold": 100,     // Alert if latency > 100ms
-  "packet_loss_threshold": 5,   // Alert if >5% packet loss
-  "consecutive_failures": 3     // Alert after 3 consecutive failures
-}
-```
-
-## 📊 Monitoring Dashboard
-
-### Real-time Graphs
-- **Latency Timeline**: Shows latency trends over time
-- **Packet Loss Events**: Red dots marking exact failure times
-- **Connection Status**: Color-coded status timeline
-- **Statistics Panel**: Live success rates and averages
-
-### Historical Analysis
-- **Daily Reports**: Automated daily performance summaries
-- **Weekly Trends**: Identify patterns and recurring issues
-- **Monthly Analytics**: Long-term performance tracking
-
-## 🎯 Use Cases
-
-### Home/Office Monitoring
-- Monitor ISP performance and reliability
-- Document connectivity issues for support tickets
-- Track internet quality for remote work
-
-### Business Applications
-- SLA monitoring and enforcement
-- Multi-location network monitoring
-- Automated failover triggers
-- Performance reporting for stakeholders
-
-### ISP Support Evidence
-- Professional ping logs in standard format
-- Timestamped evidence of outages
-- Historical performance data
-- Automated incident documentation
-
-## 🔒 Security Considerations
-
-### Email Security
-- Use app-specific passwords instead of account passwords
-- Enable 2FA on email accounts
-- Consider using dedicated monitoring email accounts
-
-### Network Security
-- Monitor from external cloud VMs for unbiased results
-- Use HTTPS for web interfaces
-- Implement IP allowlisting for sensitive deployments
-
-### Data Privacy
-- Logs contain only network performance data
-- No personal information collected
-- Local storage with optional cloud backup
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-#### "Permission denied" on ping
-```bash
-# Fix ping permissions on Linux
-sudo setcap cap_net_raw+ep $(which python3)
-```
-
-#### Email authentication fails
-```bash
-# Use app passwords instead of account passwords
-# Enable "Less secure app access" or use OAuth2
-```
-
-#### High CPU usage
-```bash
-# Increase check intervals
-"check_interval": 10  // Instead of 2 seconds
-```
-
-#### Disk space issues
-```bash
-# Enable log rotation
-sudo logrotate -f /etc/logrotate.d/isp-monitor
-```
-
-### Debug Mode
-```bash
-# Run with debug logging
-python3 isp_monitor.py --debug
-
-# Check service logs
-sudo journalctl -u isp-monitor.service -f
-
-# Verify configuration
-python3 -c "import json; print(json.load(open('isp_config.json')))"
-```
-
-## 📈 Performance Optimization
-
-### Resource Usage
-- **Memory**: ~50MB typical usage
-- **CPU**: <1% on modern systems
-- **Disk**: ~5MB per month (with rotation)
-- **Network**: Minimal (ping packets only)
-
-### Optimization Tips
-```bash
-# Reduce graph updates for lower CPU usage
-"graph_update_interval": 30
-
-# Limit data retention
-"max_data_points": 100
-
-# Disable graphs on headless servers
-"enable_realtime": false
-```
-
-## 🤝 Contributing
-
-### Development Setup
-```bash
-# Fork repository
-git clone https://github.com/yourusername/isp-network-monitor.git
-cd isp-network-monitor
-
-# Create virtual environment
-python3 -m venv venv
-source venv/bin/activate  # Linux/Mac
-# venv\Scripts\activate   # Windows
-
-# Install development dependencies
-pip install -r requirements-dev.txt
-
-# Run tests
-python -m pytest tests/
-```
-
-### Contribution Guidelines
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open Pull Request
-
-### Coding Standards
-- Follow PEP 8 style guidelines
-- Add docstrings to all functions
-- Include unit tests for new features
-- Update documentation for changes
-
-## 📋 Roadmap
-
-### Version 2.0 (Planned)
-- [ ] Web-based dashboard
-- [ ] Mobile app notifications
-- [ ] Multi-target monitoring
-- [ ] Database storage options
-- [ ] REST API for integrations
-- [ ] Slack/Teams integration
-- [ ] SMS alert support
-
-### Version 2.1 (Future)
-- [ ] Machine learning anomaly detection
-- [ ] Predictive analysis
-- [ ] Custom alerting rules
-- [ ] Integration with monitoring platforms
-- [ ] Advanced reporting features
+- Limit concurrent targets (recommended: < 50)
+- Adjust ping intervals based on requirements
+- Monitor container resource usage
+- Use production Docker compose for better performance
 
 ## 📜 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## 🤝 Contributing
 
-- **ping3 library** for reliable ICMP ping functionality
-- **matplotlib** for excellent graphing capabilities
-- **Community contributors** for testing and feedback
-- **ISP support teams** for professional evidence format requirements
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## 📞 Support
 
-### Getting Help
-- 📖 **Documentation**: Check the [docs/](docs/) directory
-- 🐛 **Bug Reports**: Open an issue on GitHub
-- 💬 **Discussions**: Use GitHub Discussions for questions
-- 📧 **Contact**: [your-email@domain.com](mailto:your-email@domain.com)
+- **Documentation:** Check `HELP.md` for detailed setup guides
+- **Issues:** Report bugs and request features via GitHub Issues
+- **Wiki:** Visit the project wiki for advanced configuration examples
 
-### Professional Support
-For enterprise deployments and custom implementations:
-- 🏢 **Enterprise Support**: Available for large deployments
-- 🔧 **Custom Development**: Tailored solutions available
-- 📊 **Consulting**: Network monitoring strategy and implementation
+---
 
-
-**Made with ❤️ for reliable network monitoring**
-
-*If this tool helped you resolve ISP issues or improve your network monitoring, please consider giving it a ⭐ star!*
+**Made with ❤️ for network administrators and DevOps professionals.**
