@@ -1,0 +1,37 @@
+# Python Monitor Container
+FROM python:3.11-slim
+
+# Install system dependencies for ICMP ping
+RUN apt-get update && apt-get install -y \
+    iputils-ping \
+    netcat-openbsd \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements and install Python packages
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy monitor application
+COPY monitor/ ./monitor/
+COPY config/ ./config/
+
+# Create necessary directories
+RUN mkdir -p /app/data /app/logs
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH=/app
+
+# Expose WebSocket port
+EXPOSE 8765
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD python3 -c "import ping3; ping3.ping('8.8.8.8', timeout=2)" || exit 1
+
+# Run the monitor
+CMD ["python3", "monitor/netpulse_monitor.py"]

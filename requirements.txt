@@ -1,0 +1,2 @@
+ping3==4.0.4
+websockets==11.0.2

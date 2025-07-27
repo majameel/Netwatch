@@ -1,0 +1,44 @@
+{
+  "name": "netpulse-network-monitor",
+  "version": "1.0.0",
+  "description": "Real-time network monitoring tool with AI-powered insights",
+  "main": "server.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "server": "node server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "axios": "^1.6.0",
+    "ping": "^0.4.4",
+    "@google/generative-ai": "^0.15.0",
+    "lucide-react": "^0.263.1",
+    "recharts": "^2.8.0",
+    "react-toastify": "^9.1.3",
+    "sqlite3": "^5.1.6",
+    "ws": "^8.14.2",
+    "node-cron": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "vite": "^4.4.5",
+    "typescript": "^5.0.2"
+  },
+  "keywords": [
+    "network-monitoring",
+    "ping",
+    "real-time",
+    "dashboard",
+    "docker"
+  ],
+  "author": "Abdul Jameel",
+  "license": "MIT"
+}

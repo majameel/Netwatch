@@ -1,0 +1,6 @@
+{
+  "name": "NetPulse - Real-time Network Monitor",
+  "description": "A GUI-based network monitoring tool to continuously ping IP addresses, detect high latency or packet drops, and provide real-time alerts, logs, and performance graphs. Powered by Gemini for intelligent issue analysis.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}

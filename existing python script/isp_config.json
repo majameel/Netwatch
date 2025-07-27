@@ -1,0 +1,27 @@
+{
+  "target_ip": "139.167.129.22",
+  "latency_threshold": 150,
+  "check_interval": 2,
+  "ping_timeout": 5,
+  "email": {
+    "smtp_server": "smtp.gmail.com",
+    "smtp_port": 587,
+    "to_email": "mohammed.abdul@techolution.com",
+    "username": "mohammed.abdul@techolution.com",
+    "password": "vlzz kqqr mhfp wvui",
+    "cooldown_seconds": 30,
+    "send_every_failure": true
+  },
+  "logging": {
+    "log_file": "isp_monitor.log",
+    "csv_file": "packet_loss_log.csv",
+    "detailed_csv": "detailed_monitor_log.csv",
+    "log_level": "INFO"
+  },
+  "graphs": {
+    "enable_realtime": false,
+    "save_graphs": true,
+    "graph_update_interval": 5,
+    "graph_window_hours": 1
+  }
+}

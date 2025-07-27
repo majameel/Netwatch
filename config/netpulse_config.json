@@ -1,0 +1,59 @@
+{
+  "targets": [],
+  "monitoring": {
+    "latency_threshold": 150,
+    "check_interval": 2,
+    "ping_timeout": 5,
+    "max_data_points": 1000,
+    "report_generation_interval": 3600,
+    "concurrent_monitoring": true
+  },
+  "email": {
+    "smtp_server": "smtp.gmail.com",
+    "smtp_port": 587,
+    "from_email": "mohammed.abdul@techolution.com",
+    "to_email": "mohammed.abdul@techolution.com",
+    "username": "mohammed.abdul@techolution.com",
+    "password": "vlzz kqqr mhfp wvui",
+    "cooldown_seconds": 300,
+    "send_alerts": false,
+    "alert_for_recovery": false,
+    "alert_for_high_latency": false,
+    "alert_for_packet_loss": false
+  },
+  "database": {
+    "path": "/app/data/netpulse.db",
+    "retention_days": 30,
+    "backup_enabled": true,
+    "backup_interval_hours": 24
+  },
+  "api": {
+    "websocket_port": 8765,
+    "data_broadcast_interval": 1,
+    "enable_cors": true,
+    "enable_compression": true
+  },
+  "reports": {
+    "daily_summary_time": "09:00",
+    "incident_threshold_minutes": 5,
+    "generate_weekly_reports": true,
+    "generate_monthly_reports": true,
+    "email_reports": true
+  },
+  "dashboard": {
+    "refresh_interval": 5,
+    "chart_data_points": 200,
+    "enable_sound_alerts": false,
+    "dark_mode": true,
+    "auto_select_first_target": true
+  },
+  "advanced": {
+    "enable_ai_analysis": false,
+    "ai_analysis_interval": 3600,
+    "export_formats": ["csv", "json", "pdf"],
+    "enable_webhooks": false,
+    "webhook_urls": [],
+    "log_level": "INFO",
+    "enable_debug_mode": false
+  }
+}
